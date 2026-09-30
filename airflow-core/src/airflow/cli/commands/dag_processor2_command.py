@@ -1,12 +1,16 @@
 from __future__ import annotations
 
-import time
+import asyncio
 
+from airflow.dag_processing2.manager import DagProcessorManager
 from airflow.utils import cli as cli_utils
+
+
+async def _run():
+    manager = DagProcessorManager()
+    await manager.run()
 
 
 @cli_utils.action_cli
 def dag_processor2(args):
-    while True:
-        print("hello")
-        time.sleep(10)
+    asyncio.run(_run())
