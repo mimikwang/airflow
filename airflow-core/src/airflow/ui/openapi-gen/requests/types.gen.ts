@@ -1645,6 +1645,7 @@ export type HealthInfoResponse = {
     scheduler: SchedulerInfoResponse;
     triggerer: TriggererInfoResponse;
     dag_processor?: DagProcessorInfoResponse | null;
+    dag_processor2?: DagProcessorInfoResponse | null;
 };
 
 /**

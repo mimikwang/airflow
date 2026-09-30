@@ -106,6 +106,16 @@ export const Health = () => {
             title={translate("health.dagProcessor")}
           />
         ) : undefined}
+        {data?.dag_processor2 ? (
+          <HealthBadge
+            degradedHint={translate("health.degradedHint.dagProcessor")}
+            instances={dagProcessorInstances(data.dag_processor2.instances)}
+            isLoading={isLoading}
+            latestHeartbeat={data.dag_processor2.latest_dag_processor_heartbeat}
+            status={data.dag_processor2.detailed_status ?? data.dag_processor2.status}
+            title={translate("health.dagProcessor")}
+          />
+        ) : undefined}
       </HStack>
     </Box>
   );

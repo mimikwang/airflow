@@ -82,3 +82,4 @@ class HealthInfoResponse(BaseModel):
     scheduler: SchedulerInfoResponse
     triggerer: TriggererInfoResponse
     dag_processor: DagProcessorInfoResponse | None = None
+    dag_processor2: DagProcessorInfoResponse | None = None

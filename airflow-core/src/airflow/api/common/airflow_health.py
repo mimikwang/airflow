@@ -25,6 +25,7 @@ from sqlalchemy import select
 from airflow.configuration import conf
 from airflow.dag_processing.bundles.manager import _get_configured_bundle_team_names
 from airflow.jobs.dag_processor_job_runner import DagProcessorJobRunner
+from airflow.jobs.dag_processor2_job_runner import DagProcessor2JobRunner
 from airflow.jobs.job import Job
 from airflow.jobs.scheduler_job_runner import SchedulerJobRunner
 from airflow.jobs.triggerer_job_runner import TriggererJobRunner
@@ -251,6 +252,12 @@ def get_airflow_health() -> dict[str, Any]:
             "instances": triggerer_instances,
         },
         "dag_processor": {
+            "status": dag_processor_status,
+            "latest_dag_processor_heartbeat": latest_dag_processor_heartbeat,
+            "detailed_status": dag_processor_detailed_status,
+            "instances": dag_processor_instances,
+        },
+        "dag_processor2": {
             "status": dag_processor_status,
             "latest_dag_processor_heartbeat": latest_dag_processor_heartbeat,
             "detailed_status": dag_processor_detailed_status,
