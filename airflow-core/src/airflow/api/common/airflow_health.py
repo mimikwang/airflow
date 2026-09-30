@@ -237,6 +237,21 @@ def get_airflow_health() -> dict[str, Any]:
         dag_processor_status = HealthStatus.UNHEALTHY
         dag_processor_detailed_status = DetailedHealthStatus.DOWN
 
+    try:
+        dag_processor2_jobs = get_jobs_health(DagProcessor2JobRunner)
+        dag_processor2_status = _legacy_status(dag_processor2_jobs)
+        dag_processor2_detailed_status = _dag_processor_detailed_status(dag_processor2_jobs)
+        if dag_processor2_jobs and dag_processor2_jobs[0].latest_heartbeat:
+            latest_dag_processor2_heartbeat = dag_processor2_jobs[0].latest_heartbeat.isoformat()
+        if live_dag_processor2_jobs := _live_jobs(dag_processor2_jobs):
+            dag_processor2_instances = [
+                _dag_processor_instance_health(job) for job in live_dag_processor2_jobs
+            ]
+    except Exception:
+        metadatabase_status = HealthStatus.UNHEALTHY
+        dag_processor2_status = HealthStatus.UNHEALTHY
+        dag_processor2_detailed_status = DetailedHealthStatus.DOWN
+
     airflow_health_status = {
         "metadatabase": {"status": metadatabase_status},
         "scheduler": {
@@ -258,10 +273,10 @@ def get_airflow_health() -> dict[str, Any]:
             "instances": dag_processor_instances,
         },
         "dag_processor2": {
-            "status": dag_processor_status,
-            "latest_dag_processor_heartbeat": latest_dag_processor_heartbeat,
-            "detailed_status": dag_processor_detailed_status,
-            "instances": dag_processor_instances,
+            "status": dag_processor2_status,
+            "latest_dag_processor_heartbeat": latest_dag_processor2_heartbeat,
+            "detailed_status": dag_processor2_detailed_status,
+            "instances": dag_processor2_instances,
         },
     }
 

@@ -22,8 +22,10 @@ class DagProcessor2JobRunner(BaseJobRunner, LoggingMixin):
     def __init__(self, job: Job, processor: DagProcessorManager):
         super().__init__(job)
         self.processor = processor
-        self.processor.heartbeat = lambda: perform_heartbeat(
-            job=self.job, heartbeat_callback=self.heartbeat_callback, only_if_necessary=True
+        self.processor.set_heartbeat(
+            lambda: perform_heartbeat(
+                job=self.job, heartbeat_callback=self.heartbeat_callback, only_if_necessary=True
+            )
         )
 
     def _execute(self) -> int | None:
