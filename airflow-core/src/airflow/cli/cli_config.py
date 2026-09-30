@@ -2299,6 +2299,22 @@ core_commands: list[CLICommand] = [
         ),
     ),
     ActionCommand(
+        name="dag-processor2",
+        help="Start a dag processor instance",
+        func=lazy_load_command("airflow.cli.commands.dag_processor2_command.dag_processor2"),
+        args=(
+            ARG_PID,
+            ARG_DAEMON,
+            ARG_BUNDLE_NAME,
+            ARG_NUM_RUNS,
+            ARG_STDOUT,
+            ARG_STDERR,
+            ARG_LOG_FILE,
+            ARG_VERBOSE,
+            ARG_DEV,
+        ),
+    ),
+    ActionCommand(
         name="version",
         help="Show the version",
         func=lazy_load_command("airflow.cli.commands.version_command.version"),
